@@ -2,12 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios'
 
-const baseUrl = '/api/persons'
-
-const getAll = () => {
-  const request = axios.get(baseUrl)
-  return request.then(response => response.data)
-}
 
 class App extends React.Component {
   constructor(props) {
@@ -34,11 +28,11 @@ class App extends React.Component {
   addPerson = (event) => {
     event.preventDefault()    
     
-    //nameObject on tietokantaan lisättävä nimi, name arvo otetaan newNamesta, number arvo otetaan newNumberista ja id on 'persons' -listan pituus + 1.
+    //nameObject on tietokantaan lisättävä nimi, name arvo otetaan newNamesta, number arvo otetaan newNumberista ja id on 'persons' -listan pituus.
     const nameObject = {
         name: this.state.newName,
         number: this.state.newNumber,
-        id: this.state.persons.length + 1
+        id: this.state.persons.id
     }
 
     //Lisätään nameObject tietokantaan
@@ -69,7 +63,7 @@ class App extends React.Component {
 
   //Poistetaan henkilö id:n perusteella. 
   deletePerson = (id) => {
-    const name = this.state.persons[id].name //indeksi [id - 1] koska listan ensimmäisen henkilön indeksi on 0 ja id 1
+    const name = this.state.persons[id]//.name
     return() => {
       if(window.confirm('Poistetaanko henkilö ' + name + '?')){ //Varmisetetaan käyttäjältä haluaako hän varmasti poistaa kyseisen henkilön
         fetch('http://localhost:3001/api/persons' + id, {
